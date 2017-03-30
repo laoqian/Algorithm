@@ -4,8 +4,17 @@ import java.util.*;
  * Created by zuoan on 2017/3/29.
  *
  * 图的最短路径Dijkstra算法。
+ *
+ * a.初始时，S只包含源点，即S＝{v}，v的距离为0。U包含除v外的其他顶点，即:U={其余顶点}，若v与U中顶点u有边，则<u,v>正常有权值，若u不是v的出边邻接点，则<u,v>权值为∞。
+
+ *b.从U中选取一个距离v最小的顶点k，把k，加入S中（该选定的距离就是v到k的最短路径长度）。
+
+ *c.以k为新考虑的中间点，修改U中各顶点的距离；若从源点v到顶点u的距离（经过顶点k）比原来距离（不经过顶点k）短，则修改顶点u的距离值，修改后的距离值的顶点k的距离加上边上的权。
+
+ *d.重复步骤b和c直到所有顶点都包含在S中。
  */
-public class mapPath {
+
+public class Dijkstra{
 
     char[] point = {'A','B','C','D','E','F','G',};
 
@@ -25,10 +34,10 @@ public class mapPath {
                     map[i][j] = random.nextInt(max)<percent?random.nextInt(max):Integer.MAX_VALUE;
                 }
 
-                s +=" "+(map[i][j]==Integer.MAX_VALUE?0:map[i][j]);
-                if(j==lv-1){
-                    System.out.println(s+'\n');
-                }
+//                s +=" "+(map[i][j]==Integer.MAX_VALUE?0:map[i][j]);
+//                if(j==lv-1){
+//                    System.out.println(s+'\n');
+//                }
             }
         }
 
@@ -36,10 +45,10 @@ public class mapPath {
     }
 
     static String getChar(int i){
-      return "("+((char)(65))+i+")";
+      return "("+'P'+i+")";
     }
 
-    static List Dijkstra(int a, int lv) throws InterruptedException {
+    static List getPathList(int a, int lv) throws InterruptedException {
 
         int[][] map = map_init(lv,30);
         boolean[] S = new boolean[lv];
@@ -89,10 +98,9 @@ public class mapPath {
                         path[j] = path[k]+map[k][j];
 
                         String s = result.get(k) +"->"+getChar(j)+"("+map[k][j]+")";
-                        System.out.println("计算："+s);
+//                        System.out.println("计算："+s);
                         result.remove(j);
                         result.add(j,s); /*设置路线图*/
-                        Thread.currentThread().sleep(500);
                     }
                 }
 
@@ -104,7 +112,7 @@ public class mapPath {
 
 
     public static void main(String[] args) throws InterruptedException {
-        List<String> pathList =   Dijkstra(0,20);
+        List<String> pathList =   getPathList(0,20);
 
         for(String s:pathList){
             System.out.println(s);
