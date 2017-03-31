@@ -16,9 +16,6 @@ import java.util.*;
 
 public class Dijkstra{
 
-    char[] point = {'A','B','C','D','E','F','G',};
-
-
     static int[][] map_init(int lv,int percent){
         int[][]  map = new int[lv][lv];
         Random random = new Random();
